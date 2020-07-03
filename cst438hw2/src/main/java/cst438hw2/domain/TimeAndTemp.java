@@ -1,20 +1,13 @@
-/**
- * 
- */
 package cst438hw2.domain;
 
-/**
- * @author jcfle
- *
- */
 public class TimeAndTemp {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public double temp;
+	public long time;
+	public int timezone;
+	
+	public TimeAndTemp(double temp, long time, int timezone){
+		this.temp = temp;
+		this.time = time;
+		this.timezone = timezone;
 	}
-
-}
+ }
