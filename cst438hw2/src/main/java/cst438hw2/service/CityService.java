@@ -42,9 +42,11 @@ public class CityService {
 			
 			// PROBABLY NEED FORMATTING HERE
 			TimeAndTemp timeAndTemp = weatherService.getTempAndTime(cityName);
+			double tempF = Math.round((timeAndTemp.temp - 273.15) * 9.0/5.0 + 32.0);
+			
 			Long time = timeAndTemp.time;
 			
-			return new CityInfo(city, country.getName(), timeAndTemp.temp, time.toString());
+			return new CityInfo(city, country.getName(), tempF, time.toString());
 		}
 	}
 }
