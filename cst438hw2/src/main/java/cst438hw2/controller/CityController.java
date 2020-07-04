@@ -19,8 +19,8 @@ public class CityController {
 	public String getCityInfo(@PathVariable("city") String cityName, Model model) {
 
 		CityInfo cityInfo = cityService.getCityInfo(cityName);
-		//model.addAttribute("cityInfo", cityInfo);
-		return cityInfo.toString();
+		model.addAttribute("cityInfo", cityInfo);
+		return "city_info";
 	} 
 	
 }

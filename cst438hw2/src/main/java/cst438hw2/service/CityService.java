@@ -23,12 +23,28 @@ public class CityService {
 	private WeatherService weatherService;
 	
 	public CityInfo getCityInfo(String cityName) {	
-		List<City> city = cityRepository.findByName(cityName);
-		Country country = countryRepository.findByCode(city.get(0).getCountryCode());
-		TimeAndTemp timeAndTemp = weatherService.getTempAndTime(cityName);
-		Long time = timeAndTemp.time;
 		
-		return new CityInfo(city.get(0), country.getName(), timeAndTemp.temp, time.toString());
+		// get city info from the database.
+		List<City> cities = cityRepository.findByName(cityName);
+		
+		// check how many cities were returned
+		if (cities.size() == 0) {
+			
+			// city name was not found
+			return null;
+		} else {
+			
+			// if multiple cities, take the first one.
+			City city = cities.get(0);
+			
+			// get country info using city
+			Country country = countryRepository.findByCode(city.getCountryCode());
+			
+			// PROBABLY NEED FORMATTING HERE
+			TimeAndTemp timeAndTemp = weatherService.getTempAndTime(cityName);
+			Long time = timeAndTemp.time;
+			
+			return new CityInfo(city, country.getName(), timeAndTemp.temp, time.toString());
+		}
 	}
-	
 }
