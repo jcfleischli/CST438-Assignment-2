@@ -50,7 +50,20 @@ public class CityRestControllerTest {
 	@Test
 	public void getCityInfo() throws Exception {
 		
-		// TODO your code goes here
+		Country country = new Country("TST", "Test Country");
+		City city = new City(1, "TestCity", country.getCode(),"DistrictTest", 100000);
+		
+		given(cityService.getCityInfo("TestCity")).willReturn(new CityInfo(city, country.getName(), 300.0, "2:50 PM"));
+		
+		MockHttpServletResponse response = mvc.perform(get("/api/cities/TestCity")).andReturn().getResponse();
+		
+		assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+		
+		CityInfo cityResult = json.parseObject(response.getContentAsString());
+		
+		CityInfo expectedResult = new CityInfo(city, "Test Country", 80, "2:50 PM");
+		
+		assertThat(cityResult).isEqualTo(expectedResult);
 	}
 
 }

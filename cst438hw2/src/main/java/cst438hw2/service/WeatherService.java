@@ -34,6 +34,7 @@ public class WeatherService {
 		double temp = json.get("main").get("temp").asDouble();
 		long time = json.get("dt").asLong();
 		int timezone = json.get("timezone").asInt();
+		log.info("Local time from weather server:" + time);
 		return new TimeAndTemp(temp, time, timezone);
 	}
 }
