@@ -16,11 +16,19 @@ public class CityController {
 	private CityService cityService;
 	
 	@GetMapping("/cities/{city}")
-	public String getCityInfo(@PathVariable("city") String cityName, Model model) {
+	public String getWeather(@PathVariable("city") String cityName, Model model) {
 
+		// calls the cityService to get info on the input cityName.
 		CityInfo cityInfo = cityService.getCityInfo(cityName);
-		model.addAttribute("cityInfo", cityInfo);
-		return "city_info";
+		
+		// returns city_info html page will city info if not null.
+		if (cityInfo != null) {
+			model.addAttribute("cityInfo", cityInfo);
+			return "city_info";
+		} else {
+			return "city_not_found";
+		}
+		
 	} 
 	
 }

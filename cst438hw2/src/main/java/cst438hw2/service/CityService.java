@@ -41,7 +41,7 @@ public class CityService {
 			Country country = countryRepository.findByCode(city.getCountryCode());
 			
 			// gets time and temperature from weather service using cityName.
-			TimeAndTemp timeAndTemp = weatherService.getTempAndTime(cityName);
+			TimeAndTemp timeAndTemp = weatherService.getTimeAndTemp(cityName);
 			
 			// converts the temperature returned by timeAndTemp to fahrenheit.
 			double tempF = Math.round((timeAndTemp.temp - 273.15) * 9.0/5.0 + 32.0);

@@ -25,7 +25,7 @@ public class WeatherService {
 		this.apiKey = apiKey; 
 	}
 	
-	public  TimeAndTemp getTempAndTime(String cityName) {
+	public  TimeAndTemp getTimeAndTemp(String cityName) {
 		ResponseEntity<JsonNode> response = restTemplate.getForEntity(
 				weatherUrl + "?q=" + cityName + "&appid=" + apiKey,
 				JsonNode.class);

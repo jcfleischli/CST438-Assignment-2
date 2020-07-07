@@ -48,22 +48,42 @@ public class CityRestControllerTest {
 	}
 
 	@Test
-	public void getCityInfo() throws Exception {
+	public void testCityFound() throws Exception {
 		
-		Country country = new Country("TST", "Test Country");
-		City city = new City(1, "TestCity", country.getCode(),"DistrictTest", 100000);
+		City city = new City(1, "TestCity", "TST", "DistrictTest", 100000);
 		
-		given(cityService.getCityInfo("TestCity")).willReturn(new CityInfo(city, country.getName(), 300.0, "2:50 PM"));
+		// create stub calls and return data for CityRestController.
+		given(cityService.getCityInfo("TestCity")).willReturn(new CityInfo(city, "TestCountry", 80.12, "2:50 PM"));
 		
+		// run the test using simulated http call.
 		MockHttpServletResponse response = mvc.perform(get("/api/cities/TestCity")).andReturn().getResponse();
 		
+		// Verify that the response status was 200 OK.
 		assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
 		
+		// converts the cityResults from json to string.
 		CityInfo cityResult = json.parseObject(response.getContentAsString());
 		
-		CityInfo expectedResult = new CityInfo(city, "Test Country", 80, "2:50 PM");
+		// sets the expected results.
+		CityInfo expectedResult = new CityInfo(1, "TestCity", "TST", "TestCountry", "DistrictTest", 100000, 80.12, "2:50 PM");
 		
+		// checks that the returned results match the expected results
 		assertThat(cityResult).isEqualTo(expectedResult);
+	}
+	
+	@Test
+	public void testCityNotFound() throws Exception {
+		
+		City city = new City(1, "TestCity", "TST", "DistrictTest", 100000);
+		
+		// create stub calls and return data for CityRestController.
+		given(cityService.getCityInfo("TestCity")).willReturn(new CityInfo(city, "TestCountry", 80.12, "2:50 PM"));
+		
+		// run the test using simulated http call with a fake city name that is not in the database.
+		MockHttpServletResponse response = mvc.perform(get("/api/cities/FalseCity")).andReturn().getResponse();
+		
+		// Verify that the response status was 404 NOT FOUND.
+		assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
 	}
 
 }
