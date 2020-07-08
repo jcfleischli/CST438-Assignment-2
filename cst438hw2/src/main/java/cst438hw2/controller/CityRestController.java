@@ -27,7 +27,7 @@ public class CityRestController {
 		if (city != null) {
 			return new ResponseEntity<CityInfo>(city, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<CityInfo>(city, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<CityInfo>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
