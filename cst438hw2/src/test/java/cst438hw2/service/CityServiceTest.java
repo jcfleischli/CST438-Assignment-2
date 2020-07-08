@@ -73,7 +73,7 @@ public class CityServiceTest {
 		List<City> cities = new ArrayList<City>();
 		cities.add(city);
 		
-		// create the stub call and return the empty ArrayList.
+		// create the stub call and return data for city repository.
 		given(cityRepository.findByName("TestCity")).willReturn(cities);
 		
 		// perform test by calling getCityInfo with a city name parameter that doesn't exist.
